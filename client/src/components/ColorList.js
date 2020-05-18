@@ -98,68 +98,6 @@ const ColorList = ({ colors, updateColors, history }) => {
           </li>
         ))}
       </ul>
-      {/* {editing && (
-        <form onSubmit={saveEdit}>
-          <legend>edit color</legend>
-          <label>
-            color name:
-            <input
-              onChange={e =>
-                setColorToEdit({ ...colorToEdit, color: e.target.value })
-              }
-              value={colorToEdit.color}
-            />
-          </label>
-          <label>
-            hex code:
-            <input
-              onChange={e =>
-                setColorToEdit({
-                  ...colorToEdit,
-                  code: { hex: e.target.value }
-                })
-              }
-              value={colorToEdit.code.hex}
-            />
-          </label>
-          <div className="button-row">
-            <button type="submit">save</button>
-            <button onClick={() => setEditing(false)}>cancel</button>
-          </div>
-        </form>
-      )}
-      <div className="spacer" />
-      {/* stretch - build another form here to add a color
-      {!editing?(
-        <form onSubmit={saveEdit}>
-          <legend>add color</legend>
-          <label>
-            color name:
-            <input
-              onChange={e =>
-                setColorToEdit({ ...colorToEdit, color: e.target.value })
-              }
-              value={colorToEdit.color}
-            />
-          </label>
-          <label>
-            hex code:
-            <input
-              onChange={e =>
-                setColorToEdit({
-                  ...colorToEdit,
-                  code: { hex: e.target.value }
-                })
-              }
-              value={colorToEdit.code.hex}
-            />
-          </label>
-          <div className="button-row">
-            <button type="submit">save</button>
-            <button onClick={() => setEditing(false)}>cancel</button>
-          </div>
-        </form>
-      ):<></>} */}
         <form onSubmit={saveEdit}>
           {editing?<legend>edit color</legend>:<legend>add color</legend>}
           <label>

@@ -29,23 +29,12 @@ function App(props) {
   return (
     <Router>
       <div className="App">
-        {/* {<div class="topnav">
-          <h1>Welcome to the Bubble App!</h1>
-          {!loggedIn?<NavLink to="/" class="active">Bubble App</NavLink>:<NavLink to="/bubbles" class="active">Bubble App</NavLink>}
-          <div className="myLinks hidden" id="myLinks">
-            {loggedIn?<Link to="/logout">Logout</Link>:<Link to="/login">Login</Link>}
-          </div>
-        </div>} */}
         <Switch>
           <PrivateRoute exact path="/bubbles" component={BubblePage} />
           <Route path="/login" render={(props)=> <Login {...props} func={login} />}/>
           <Route path="/logout" render={(props)=> <Logout {...props} history={props.history} func={logout} />}/>
           {!loggedIn?<Route render={(props)=> <Login {...props} func={login} />}/>:<PrivateRoute component={BubblePage} />}
         </Switch>
-        {/*
-          Build a PrivateRoute component that will
-          display BubblePage when you're authenticated
-        */}
       </div>
     </Router>
   );
