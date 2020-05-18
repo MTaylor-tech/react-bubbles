@@ -39,7 +39,6 @@ function App(props) {
         <Switch>
           <PrivateRoute exact path="/bubbles" component={BubblePage} />
           <Route path="/login" render={(props)=> <Login {...props} func={login} />}/>
-          <Route exact path="/" render={(props)=> <Login {...props} func={login} />}/>
           <Route path="/logout" render={(props)=> <Logout {...props} history={props.history} func={logout} />}/>
           {!loggedIn?<Route render={(props)=> <Login {...props} func={login} />}/>:<PrivateRoute component={BubblePage} />}
         </Switch>
