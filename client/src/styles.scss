@@ -97,3 +97,25 @@ form {
     margin-top: 16px;
   }
 }
+
+.myLinks {
+  margin: 3vh 0;
+}
+
+.loginForm {
+  margin: 0 10vw;
+  padding: 0 2vw;
+
+  input {
+    width: 100%;
+  }
+}
+
+.loginBtn {
+  border: none;
+  background-color: black;
+  color: white;
+  padding: 3px 8px;
+  margin-top: 16px;
+  width: 100%;
+}

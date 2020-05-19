@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
+import {Link} from "react-router-dom";
+
+import {axiosWithAuth} from "../utils/axiosWithAuth";
 
 const initialColor = {
   color: "",
   code: { hex: "" }
 };
 
-const ColorList = ({ colors, updateColors }) => {
+const ColorList = ({ colors, updateColors, history }) => {
   console.log(colors);
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
@@ -21,14 +24,59 @@ const ColorList = ({ colors, updateColors }) => {
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is is saved right now?
+    if (editing) {
+      axiosWithAuth()
+        .put(`/colors/${colorToEdit.id}`, colorToEdit)
+        .then(res => {
+          console.log(res);
+          updateColors(colors.map(c=>{
+            if (c.id!==colorToEdit.id) {
+              return c;
+            } else {
+              return colorToEdit;
+            }
+          }));
+          setEditing(false);
+          setColorToEdit(initialColor);
+        })
+        .catch(err => {
+          console.log("Err is: ", err);
+      });
+    } else {
+      axiosWithAuth()
+        .post('/colors', colorToEdit)
+        .then(res => {
+          console.log(res);
+          updateColors(res.data);
+        })
+        .catch(err => {
+          console.log("Error is: ",err);
+        })
+    }
   };
 
   const deleteColor = color => {
     // make a delete request to delete this color
+    if (window.confirm("Are you sure?")) {
+      axiosWithAuth()
+        .delete(`/colors/${color.id}`)
+        .then(res => {
+          console.log(res);
+          updateColors(colors.filter(c=>c.id!==color.id));
+        })
+        .catch(err => {
+          console.log("Err is: ", err);
+      });
+    } else {
+      console.log("You pressed Cancel");
+    }
   };
 
   return (
     <div className="colors-wrap">
+      <div className="myLinks" id="myLinks">
+        <Link to="/logout">Logout</Link>
+      </div>
       <p>colors</p>
       <ul>
         {colors.map(color => (
@@ -50,9 +98,8 @@ const ColorList = ({ colors, updateColors }) => {
           </li>
         ))}
       </ul>
-      {editing && (
         <form onSubmit={saveEdit}>
-          <legend>edit color</legend>
+          {editing?<legend>edit color</legend>:<legend>add color</legend>}
           <label>
             color name:
             <input
@@ -79,9 +126,6 @@ const ColorList = ({ colors, updateColors }) => {
             <button onClick={() => setEditing(false)}>cancel</button>
           </div>
         </form>
-      )}
-      <div className="spacer" />
-      {/* stretch - build another form here to add a color */}
     </div>
   );
 };
